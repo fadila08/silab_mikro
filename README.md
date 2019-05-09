@@ -1,1 +1,0 @@
-# silab_mikro
