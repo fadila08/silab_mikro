@@ -20,12 +20,20 @@ class ViewDosbimTransformer extends TransformerAbstract
 		}
 		
         return [
-            'id' => $dosbim->id,
-            'nbi' => User::find($dosbim->id_mhs)->nomor_induk,
-            'mahasiswa' => User::find($dosbim->id_mhs)->nama,
-            'id_dosen' => $dosbim->id_dosbim,
-            'dosen' => $nama_dosbim,
-            'kelas' => Kelas::find($dosbim->id_kelas)->kelas,
+            'mahasiswa' => [
+                'id' => $dosbim->id_mhs,
+                'nomor_induk' => User::find($dosbim->id_mhs)->nomor_induk,
+                'nama_mahasiswa' => User::find($dosbim->id_mhs)->nama
+            ],
+            'dosen' => [
+                'id' => $dosbim->id_dosbim,
+                'nama_dosen' => $nama_dosbim
+            ],
+            'kelas' => [
+                'id' => $dosbim->id_kelas,
+                'nama_kelas' => Kelas::find($dosbim->id_kelas)->kelas,
+            ],
+            'id' => $dosbim->id
         ];
     }
 }

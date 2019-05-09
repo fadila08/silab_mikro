@@ -14,7 +14,7 @@ class ViewAbsensiTransformer extends TransformerAbstract
         return [
             'mahasiswa' => [
                 'id' => $absensi->id,
-                'nbi' => User::find($absensi->id_mhs)->nomor_induk,
+                'nomor_induk' => User::find($absensi->id_mhs)->nomor_induk,
                 'nama_mahasiswa' => User::find($absensi->id_mhs)->nama,
             ],
             'kelas' => [
