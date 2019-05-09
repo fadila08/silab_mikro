@@ -86,6 +86,7 @@ class UserController extends Controller
         return fractal()
             ->item($user)
             ->transformWith(new ViewUserTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
     }
 }

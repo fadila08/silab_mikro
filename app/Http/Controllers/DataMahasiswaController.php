@@ -29,6 +29,7 @@ class DataMahasiswaController extends Controller
     return fractal()
       ->collection($user)
       ->transformWith(new ViewUserTransformer)
+      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
 
@@ -37,6 +38,7 @@ class DataMahasiswaController extends Controller
     return fractal()
       ->item($user)
       ->transformWith(new UserTransformer)
+      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
   
@@ -58,6 +60,7 @@ class DataMahasiswaController extends Controller
     $response = fractal()
     ->item($user)
     ->transformWith(new InsertDataUserTransformer)
+    ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
     ->addMeta([
       'token' => auth()->login($user),
     ])
@@ -78,6 +81,7 @@ class DataMahasiswaController extends Controller
     return fractal()
       ->item($user)
       ->transformWith(new UserTransformer)
+      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
 

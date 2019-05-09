@@ -28,6 +28,7 @@ class DosbimController extends Controller
         return fractal()
             ->collection($dosbim)
             ->transformWith(new ViewDosbimTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
     }
 
@@ -50,6 +51,7 @@ class DosbimController extends Controller
         $response = fractal()
             ->item($dosbim)
             ->transformWith(new InsertDosbimTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
         return response()->json($response, 201);
     }
@@ -65,6 +67,7 @@ class DosbimController extends Controller
         return fractal()
             ->item($dosbim)
             ->transformWith(new ViewDosbimTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
     }
 
@@ -84,6 +87,7 @@ class DosbimController extends Controller
         return fractal()
             ->item($dosbim)
             ->transformWith(new ViewDosbimTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
     }
 

@@ -25,6 +25,7 @@ class DataAslabController extends Controller
         return fractal()
             ->collection($user)
             ->transformWith(new ViewUserTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
     }
 
@@ -33,6 +34,7 @@ class DataAslabController extends Controller
         return fractal()
             ->item($user)
             ->transformWith(new UserTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
     }
 
@@ -43,9 +45,9 @@ class DataAslabController extends Controller
             'nomor_induk' => 'required|unique:users'
         ]);
 
-        if ($request->pass_otomatis==1) {
+        if (trim($request->password) == '') {
             $password = $request->nomor_induk;
-        } else if ($request->pass_otomatis==0) {
+        } else {
             $password = $request->password;
         };
 
@@ -62,6 +64,7 @@ class DataAslabController extends Controller
         $response = fractal()
         ->item($user)
         ->transformWith(new InsertDataUserTransformer)
+        ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
         ->addMeta([
             'token' => JWTAuth::fromUser($user),
         ])
@@ -84,6 +87,7 @@ class DataAslabController extends Controller
         return fractal()
             ->item($user)
             ->transformWith(new UserTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
     }
 

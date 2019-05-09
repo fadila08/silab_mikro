@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Transformers\InsertDataUserTransformer;
 use App\Transformers\UserTransformer;
 use App\Transformers\ViewUserTransformer;
-use App\Imports\MahasiswaImport;
+use App\Imports\DosenImport;
+use Excel;
 use Validator;
 use Auth;
 use App\User;
@@ -29,6 +30,7 @@ class DataDosenController extends Controller
     return fractal()
       ->collection($user)
       ->transformWith(new ViewUserTransformer)
+      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
 
@@ -37,6 +39,7 @@ class DataDosenController extends Controller
     return fractal()
       ->item($user)
       ->transformWith(new UserTransformer)
+      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
   
@@ -46,9 +49,15 @@ class DataDosenController extends Controller
     $this->validator($request->all())->validate();
     $ni = $request->nomor_induk;
 
+    if (trim($request->password) == '') {
+      $password = $ni;
+    } else {
+      $password = $request->password;
+    };
+
     $user = $user->create([
       'username' => $ni,
-      'password' => bcrypt($ni),
+      'password' => bcrypt($password),
       'nama' => $request->nama,
       'nomor_induk' => $ni,
       'email' => $request->email,
@@ -60,6 +69,7 @@ class DataDosenController extends Controller
     $response = fractal()
       ->item($user)
       ->transformWith(new InsertDataUserTransformer)
+      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->addMeta([
           'token' => auth()->login($user),
       ])
@@ -80,6 +90,7 @@ class DataDosenController extends Controller
     return fractal()
       ->item($user)
       ->transformWith(new UserTransformer)
+      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
 
@@ -95,6 +106,14 @@ class DataDosenController extends Controller
 
     return response()->json([
       'message' => 'data sudah terhapus',
+    ]);
+  }
+
+  public function import(Request $request)
+  {
+    $datas = Excel::import(new DosenImport, $request->file('file'));
+    return response()->json([
+      'message' => 'yay! :)'
     ]);
   }
 
