@@ -58,13 +58,13 @@ class DataDosenController extends Controller
     ]);
 
     $response = fractal()
-	    ->item($user)
-	    ->transformWith(new InsertDataUserTransformer)
-	    ->addMeta([
-	        'token' => auth()->login($user),
-	    ])
-	    ->toArray();
-                
+      ->item($user)
+      ->transformWith(new InsertDataUserTransformer)
+      ->addMeta([
+          'token' => auth()->login($user),
+      ])
+      ->toArray();
+
     return response()->json($response, 201);
 
   }

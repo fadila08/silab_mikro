@@ -869,16 +869,16 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "3.1.12",
+            "version": "3.1.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "e1816f793c6abd33e3858ecb3b056da9a7dd5d73"
+                "reference": "d79ee01175c6a5e93f2a873dcda1b755b7570076"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/e1816f793c6abd33e3858ecb3b056da9a7dd5d73",
-                "reference": "e1816f793c6abd33e3858ecb3b056da9a7dd5d73",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/d79ee01175c6a5e93f2a873dcda1b755b7570076",
+                "reference": "d79ee01175c6a5e93f2a873dcda1b755b7570076",
                 "shasum": ""
             },
             "require": {
@@ -933,7 +933,7 @@
                 "php",
                 "phpspreadsheet"
             ],
-            "time": "2019-04-17T17:22:54+00:00"
+            "time": "2019-05-08T12:05:59+00:00"
         },
         {
             "name": "markbaker/complex",

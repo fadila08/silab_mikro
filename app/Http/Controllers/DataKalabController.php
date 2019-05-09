@@ -38,9 +38,9 @@ class DataKalabController extends Controller
         ->item($user)
         ->transformWith(new InsertDataUserTransformer)
         ->addMeta([
-          'token' => auth()->login($user),
+            'token' => auth()->login($user),
         ])->toArray();
-                  
+
         return response()->json($response, 201);
     }
 

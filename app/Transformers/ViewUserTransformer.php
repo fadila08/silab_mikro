@@ -18,7 +18,7 @@ class ViewUserTransformer extends TransformerAbstract
             'email' => $user->email,
             'nomor_whatsapp' => $user->nomor_whatsapp,
             'id' => $user->id
-       ];
+        ];
     }
 
 }

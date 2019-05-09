@@ -71,7 +71,8 @@ Route::apiResource('datagaleri', 'GaleriController')->only('index','show');
 Route::get('unduhan/read', 'UnduhanController@read'); 
 Route::get('unduhan/download/{id}', 'UnduhanController@download');
 
-
+// FILTER
+Route::get('filter', 'FilterController@index');
 
 
 
