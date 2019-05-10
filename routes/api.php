@@ -135,6 +135,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 	// ADDITIONAL RESOURCES
 	Route::apiResource('pengumuman', 'PengumumanController')->except('index','show');
 	Route::apiResource('galeri', 'GaleriController')->except('index','show','update');
+	Route::apiResource('tugas', 'TugasController');
 
 	Route::delete('unduhan/delete/{id}', 'UnduhanController@delete'); 
 	Route::post('unduhan/insert', 'UnduhanController@insert');  

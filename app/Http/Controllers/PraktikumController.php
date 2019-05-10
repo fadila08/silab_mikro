@@ -66,16 +66,8 @@ class PraktikumController extends Controller
     public function update(Request $request, Praktikum $praktikum)
     {
         $praktikum = $praktikum->update($request->all());
-
-        $response = fractal()
-            ->item($praktikum)
-            ->transformWith(new ViewPraktikumTransformer)
-            ->addMeta([
-                'message' => 'Success!',
-            ])
-            ->toArray();
                     
-        return response()->json($response, 201);
+        return response()->json('done',200);
     }
 
     /**

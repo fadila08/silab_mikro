@@ -13,12 +13,21 @@ class KelasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Kelas $kela)
+    public function index(Request $request, Kelas $kela)
     {
-        return fractal()
-          ->collection($kela->all())
-          ->transformWith(new ViewKelasTransformer)
-          ->toArray();
+        if ($request->get('mhs') != null || $request->get('mhs') != '') {
+            $kela = $kela->where('id_mhs','=',$request->get('mhs'))->get();
+            return fractal()
+              ->collection($kela->all())
+              ->transformWith(new ViewKelasTransformer)
+              ->toArray();
+        }
+        else { 
+            return fractal()
+              ->collection($kela->all())
+              ->transformWith(new ViewKelasTransformer)
+              ->toArray();
+        }
     }
 
     /**

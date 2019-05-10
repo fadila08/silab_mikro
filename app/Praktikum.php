@@ -8,4 +8,5 @@ class praktikum extends Model
 {
 	protected $table = 'praktikum';
 	protected $guarded = array('id');
+	public $timestamps = false;
 }

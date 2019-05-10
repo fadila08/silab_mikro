@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transformers\ViewAbsensiTransformer;
+use App\Transformers\ViewAbsensiMHSTransformer;
 use Validator;
 use App\Absensi;
 
@@ -18,14 +19,32 @@ class AbsensiController extends Controller
         ]);
     }
 
-    public function index()
+    public function index(Request $request, Absensi $absensi)
     {
-        $absensi = Absensi::all(); 
-
-        return fractal()
-            ->collection($absensi)
-            ->transformWith(new ViewAbsensiTransformer)
-            ->toArray();
+        if ($request->get('kelas') != null || $request->get('kelas') != '') {
+            $absensi = $absensi->where('id_kelas','=',$request->get('kelas'))->get();
+            return fractal()
+                ->collection($absensi)
+                ->transformWith(new ViewAbsensiTransformer)
+                ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+                ->toArray();
+        }
+        if ($request->get('mhs') != null || $request->get('mhs') != '') {
+            $absensi = $absensi->where('id_mhs','=',$request->get('mhs'))->get();
+            return fractal()
+                ->collection($absensi)
+                ->transformWith(new ViewAbsensiMHSTransformer)
+                ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+                ->toArray();
+        }
+        else {
+            $absensi = Absensi::all(); 
+            return fractal()
+                ->collection($absensi)
+                ->transformWith(new ViewAbsensiTransformer)
+                ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+                ->toArray();
+        }
     }
 
     /**
@@ -36,20 +55,7 @@ class AbsensiController extends Controller
      */
     public function store(Request $request, Dosbim $dosbim)
     {
-        $this->validator($request->all())->validate();
 
-        $dosbim = $dosbim->create([
-            'id_mhs' => $request->id_mhs,
-            'id_dosbim' => $request->id_dosbim,
-            'id_kelas' => $request->id_kelas
-        ]);
-
-        $response = fractal()
-            ->item($dosbim)
-            ->transformWith(new InsertDosbimTransformer)
-            ->toArray();
-                  
-        return response()->json($response, 201);
     }
 
     /**
@@ -58,11 +64,12 @@ class AbsensiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Dosbim $dosbim)
+    public function show(Absensi $absensi)
     {
         return fractal()
-            ->item($dosbim)
-            ->transformWith(new ViewDosbimTransformer)
+            ->item($absensi)
+            ->transformWith(new ViewAbsensiTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
             ->toArray();
     }
 
@@ -73,20 +80,28 @@ class AbsensiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Absensi $absensi)
     {
-        $this->validator($data->all())->validate();
-        $user->nama = $request->get('nama', $user->nama);
-        $user->nomor_induk = $request->get('nomor_induk', $user->nomor_induk);
-        $user->email = $request->get('email', $user->email);
-        $user->nomor_whatsapp = $request->get('nomor_whatsapp', $user->nomor_whatsapp);
+        $old = $absensi;
+        $absensi = $absensi->update($request->all());
+        $absensi = Absensi::find($old['id']);
+        $presentase = 0;
 
-        $user->save();
-
-        return fractal()
-            ->item($user)
-            ->transformWith(new UserTransformer)
-            ->toArray();
+        if ($absensi['pertemuan_1'] != null) {
+            $presentase += 25;
+        }
+        if ($absensi['pertemuan_2'] != null) {
+            $presentase += 25;
+        }
+        if ($absensi['pertemuan_3'] != null) {
+            $presentase += 25;
+        }
+        if ($absensi['pertemuan_4'] != null) {
+            $presentase += 25;
+        }
+        $request['presentase'] = $presentase;
+        $absensi->update($request->only(['presentase']));
+        return response()->json($absensi);
     }
 
     /**
