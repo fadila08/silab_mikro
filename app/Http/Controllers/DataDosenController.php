@@ -30,7 +30,7 @@ class DataDosenController extends Controller
     return fractal()
       ->collection($user)
       ->transformWith(new ViewUserTransformer)
-      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+      // ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
 
@@ -39,7 +39,7 @@ class DataDosenController extends Controller
     return fractal()
       ->item($user)
       ->transformWith(new UserTransformer)
-      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+      // ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
   
@@ -69,7 +69,7 @@ class DataDosenController extends Controller
     $response = fractal()
       ->item($user)
       ->transformWith(new InsertDataUserTransformer)
-      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+      // ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->addMeta([
           'token' => auth()->login($user),
       ])
@@ -90,7 +90,7 @@ class DataDosenController extends Controller
     return fractal()
       ->item($user)
       ->transformWith(new UserTransformer)
-      ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+      // ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
       ->toArray();
   }
 
