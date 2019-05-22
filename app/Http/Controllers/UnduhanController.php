@@ -64,6 +64,27 @@ class UnduhanController extends Controller
             ->toArray();
     }
 
+    public function readbyId(Unduhan $unduhan, $id)
+    {
+        $unduhan = $unduhan->find($id);
+        
+        if ($unduhan == null) {
+            return response()->json(['error' => 'unduhan tidak ditemukan'], 401);
+        }
+
+        $current = Carbon::now()->format('Y-m-d');
+
+        if ($unduhan->batas_tanggal_berlaku < $current) {
+            return response()->json(['error' => 'unduhan sudah kadaluarsa'], 401);
+        }
+
+        return fractal()
+            ->item($unduhan)
+            ->transformWith(new UnduhanTransformer)
+            ->toArray();
+    }
+
+
     public function download(Unduhan $unduhan, $id)
     {       
         $unduhan = $unduhan->find($id);

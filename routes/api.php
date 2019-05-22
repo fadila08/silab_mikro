@@ -69,6 +69,7 @@ Route::get('pengumuman/downloadlampiran/{id}', 'PengumumanController@downloadLam
 Route::apiResource('datagaleri', 'GaleriController')->only('index','show');
 
 Route::get('unduhan/read', 'UnduhanController@read'); 
+Route::get('unduhan/read/{id}', 'UnduhanController@readbyId'); 
 Route::get('unduhan/download/{id}', 'UnduhanController@download');
 
 // FILTER
