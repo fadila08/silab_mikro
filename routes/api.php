@@ -100,6 +100,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 	]]);
 	Route::post('datamahasiswa/import', 'DataMahasiswaController@import');
 
+	//MAHASISWA INCLUDE KELAS
+	Route::apiResource('mahasiswa', 'MahasiswaController', ['parameters' => [
+		'mahasiswa' => 'user'
+		]]);
+	// 	Route::post('datamahasiswa/import', 'DataMahasiswaController@import');
+		
 	//LABORAN
 	Route::apiResource('datalaboran', 'DataLaboranController', ['parameters' => [
     'datalaboran' => 'user'
