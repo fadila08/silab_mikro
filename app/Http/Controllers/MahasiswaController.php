@@ -62,15 +62,17 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Dosbim $dosbim)
+    public function show(Dosbim $dosbim, $id)
     {
-        // return fractal()
-        //     ->item($dosbim)
-        //     ->transformWith(new ViewDosbimTransformer)
-        //     ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
-        //     ->toArray();
+        $dosbim = $dosbim->find($id);
+        
+        return fractal()
+            ->item($dosbim)
+            ->transformWith(new ViewMahasiswaDetailTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+            ->toArray();
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
