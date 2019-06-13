@@ -104,6 +104,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 	Route::apiResource('mahasiswa', 'MahasiswaController', ['parameters' => [
 		'mahasiswa' => 'user'
 		]]);
+	Route::get('mahasiswa/dosbim/{idDosbim}', 'MahasiswaController@showByDosbim');
 	// 	Route::post('datamahasiswa/import', 'DataMahasiswaController@import');
 		
 	//LABORAN

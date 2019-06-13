@@ -111,4 +111,16 @@ class MahasiswaController extends Controller
         //     'message' => 'yay! :)'
         // ]);
     }
+
+    public function showByDosbim(Dosbim $dosbim, $idDosbim) 
+    {
+        $dosbim = $dosbim->where('id_dosbim', $idDosbim)->get();
+        
+        return fractal()
+            ->collection($dosbim)
+            ->transformWith(new ViewMahasiswaTransformer)
+            ->serializeWith(new \Spatie\Fractalistic\ArraySerializer())
+            ->toArray();
+        
+    }
 }
